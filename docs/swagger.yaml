@@ -1,0 +1,374 @@
+openapi: 3.0.3
+info:
+  title: Basic Bank System
+  description: |-
+    aplikasi ini untuk merepresentasikan pengguna, rekening bank, dan transaksi. Pengguna dapat memiliki profil terkait. Setiap rekening bank memiliki saldo dan terkait dengan transaksi sebagai sumber atau tujuan. Ini memungkinkan sistem untuk melakukan pendaftaran pengguna, transfer dana, dan melacak riwayat transaksi.
+  contact:
+    email: alex@mail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1
+tags:
+  - name: Users
+    description: Operations related to users
+  - name: Accounts
+    description: Operations related to accounts
+  - name: Transactions
+    description: Operations related to transactions
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      operationId: post-create-new-user
+      summary: Create a new user and a new profile
+      description: Creates a new user and a new profile with the provided information.
+      requestBody:
+        $ref: "#/components/requestBodies/CreateUser"
+      responses:
+        "201":
+          description: Successful user creation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          newUser:
+                            $ref: "#/components/schemas/UserModel"
+                          newProfile:
+                            $ref: "#/components/schemas/ProfileModel"
+    get:
+      tags:
+        - User
+      operationId: get-fetch-all-user
+      summary: Get all users
+      description: Retrieves a list of all registered users.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          users:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/UserModel"
+  "/users/{userId}":
+    get:
+      tags:
+        - User
+      operationId: get-fetch-user-detail
+      summary: Get user details
+      description: Retrieves details of a specific user.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user to retrieve.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/UserModel"
+    put:
+      tags:
+        - User
+      operationId: put-update-user
+      summary: Update user details
+      description: Updates details of a specific user.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user to update.
+      responses:
+        "200":
+          description: Successful user update
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        example: null
+    delete:
+      tags:
+        - User
+      operationId: delete-remove-user
+      summary: Delete user
+      description: Deletes a specific user.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the user to delete.
+      responses:
+        "200":
+          description: Successful user deletion
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        example: null
+  /posts:
+    post:
+      tags:
+        - Post
+      operationId: post-create-post
+      summary: Create a new post
+      description: Creates a new post with the provided information.
+      requestBody:
+        $ref: "#/components/requestBodies/CreatePost"
+      responses:
+        "201":
+          description: Successful post creation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PostModel"
+    get:
+      tags:
+        - Post
+      operationId: get-fetch-all-post
+      summary: Get all posts
+      description: Retrieves a list of all registered posts.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number for pagination.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Number of items per page.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          pagination:
+                            $ref: "#/components/schemas/Pagination"
+                          posts:
+                            type: array
+                            items:
+                              $ref: "#/components/schemas/PostModel"
+  "/posts/{postId}":
+    get:
+      tags:
+        - Post
+      operationId: get-fetch-post-detail
+      summary: Get post details
+      description: Retrieves details of a specific post.
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the post to retrieve.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/BasicResponse"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/PostModel"
+components:
+  schemas:
+    BasicResponse:
+      title: BasicResponse
+      type: object
+      properties:
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "success"
+    UserModel:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "arfin"
+        email:
+          type: string
+          example: "arfin@mail.com"
+        password:
+          type: string
+          example: "123456"
+    ProfileModel:
+      title: Profile
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        identity_type:
+          type: string
+          example: "KTP"
+        identity_number:
+          type: string
+          example: "1234567890"
+        address:
+          type: string
+          example: "Jalan Sudirman No. 123"
+        userId:
+          type: integer
+          example: 1
+    PostModel:
+      title: Post
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Software Development Life Cycle"
+        isPublished:
+          type: boolean
+          example: true
+    Pagination:
+      title: Pagination
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            next:
+              type: string
+              example: "https://domain.com/users?page=3&limit=10"
+            prev:
+              type: string
+              example: "https://domain.com/users?page=1&limit=10"
+        total_items:
+          type: integer
+          example: 100
+  requestBodies:
+    CreateUser:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "arfin"
+              email:
+                type: string
+                example: "arfin@mail.com"
+              password:
+                type: string
+                example: "123456"
+              identity_type:
+                type: string
+                example: "KTP"
+              identity_number:
+                type: string
+                example: "1234567890"
+              address:
+                type: string
+                example: "Jalan Sudirman No. 123"
+    CreatePost:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: "Software Development Life Cycle"
+              categories:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Programming"
+              authorId:
+                type: integer
+                example: 1
+  securitySchemes:
+    token:
+      type: apiKey
+      name: token
+      in: header
