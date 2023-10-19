@@ -14,7 +14,9 @@ module.exports = function (req, res, next) {
     });
   }
 
-  jwt.verify(authorization, JWT_SECRET_KEY, async (err, decoded) => {
+  const token = authorization.split("Bearer ")[1];
+
+  jwt.verify(token, JWT_SECRET_KEY, async (err, decoded) => {
     if (err) {
       return res.status(401).json({
         status: false,

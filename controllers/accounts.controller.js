@@ -80,6 +80,14 @@ module.exports = {
         },
       });
 
+      if (!account) {
+        return res.status(400).json({
+          status: false,
+          message: "Bad Request",
+          data: `No account found with ID ${id}`,
+        });
+      }
+
       res.status(200).json({
         status: true,
         message: "Get Account Detail Successfully",
