@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { PORT = 3000 } = process.env;
 const router = require("./routes");
 
 app.use(morgan("dev"));
@@ -29,4 +28,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => console.log("listening on port", PORT));
+module.exports = app;

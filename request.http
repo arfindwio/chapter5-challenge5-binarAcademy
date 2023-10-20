@@ -2,8 +2,8 @@ POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "name":"arfin11",
-    "email":"arfin11@mail.com",
+    "name":"arfin2",
+    "email":"arfin@mail.com",
     "password":"123456",
     "identity_type": "KTP",
     "identity_number": "1234567890",
@@ -15,15 +15,15 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/users
 
 ###
-GET http://localhost:3000/api/v1/users/1
+GET http://localhost:3000/api/v1/users/35
 
 ###
 POST http://localhost:3000/api/v1/users/auth/register
 Content-Type: application/json
 
 {
-    "name":"arfin10",
-    "email":"arfin10@mail.com",
+    "name":"arfin2",
+    "email":"arfin2@mail.com",
     "password":"123456",
     "password_confirmation": "123456"
 }
@@ -33,20 +33,20 @@ POST http://localhost:3000/api/v1/users/auth/login
 Content-Type: application/json
 
 {
-    "email":"arfin7@mail.com",
-    "password":"123456"
+    "email":"usertest2@mail.com",
+    "password":"pasword123"
 }
 
 ###
 GET http://localhost:3000/api/v1/users/auth/authenticate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk3NzM4MjI5fQ.bv9p1L6Jk1-HLHZXmbtkJMf1FLTVh5QB_OAd2s77DFw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ5LCJpYXQiOjE2OTc3NTg4MDR9.xSJixB10EMOiqzSVzyDxKR1elE1ryqGkAl7T4HaVvwo
 
 ###
 POST http://localhost:3000/api/v1/accounts
 Content-Type: application/json
 
 {
-    "user_id": 2,
+    "user_id": 1326,
     "bank_name": "BRI",
     "bank_account_number": "0123456789",
     "balance": 1000000
@@ -57,15 +57,15 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/accounts
 
 ###
-GET http://localhost:3000/api/v1/accounts/1
+GET http://localhost:3000/api/v1/accounts/44
 
 ###
 POST http://localhost:3000/api/v1/transactions
 Content-Type: application/json
 
 {
-    "source_account_id": 1, 
-    "destination_account_id": 2,
+    "source_account_id": 66, 
+    "destination_account_id": 67,
     "amount": 100000
 }
 
@@ -74,4 +74,4 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/transactions
 
 ###
-GET http://localhost:3000/api/v1/transactions/1
+GET http://localhost:3000/api/v1/transactions/16
