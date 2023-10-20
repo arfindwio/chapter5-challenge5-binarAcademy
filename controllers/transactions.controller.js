@@ -11,6 +11,7 @@ module.exports = {
         return res.status(400).json({
           status: false,
           message: "Source and destination accounts cannot be the same",
+          data: null,
         });
       }
 
@@ -26,6 +27,7 @@ module.exports = {
         return res.status(400).json({
           status: false,
           message: "Source or destination account not found",
+          data: null,
         });
       }
 
@@ -33,6 +35,7 @@ module.exports = {
         return res.status(400).json({
           status: false,
           message: "Insufficient balance in the source account",
+          data: null,
         });
       }
 
@@ -128,9 +131,10 @@ module.exports = {
       });
 
       if (!transaction) {
-        return res.status(404).json({
+        return res.status(400).json({
           status: false,
           message: "Transaction not found",
+          data: null,
         });
       }
 

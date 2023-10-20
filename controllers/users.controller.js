@@ -19,6 +19,7 @@ module.exports = {
         return res.status(400).json({
           status: false,
           message: "Email already exists",
+          data: null,
         });
       }
 
@@ -43,7 +44,7 @@ module.exports = {
       res.status(201).json({
         status: true,
         message: "User and Profile Created Successfully",
-        Data: { newUser, newProfile },
+        data: { newUser, newProfile },
       });
     } catch (err) {
       next(err);
@@ -145,7 +146,7 @@ module.exports = {
       res.status(201).json({
         status: true,
         message: "User and Profile Created Successfully",
-        Data: { newUser },
+        data: { newUser },
       });
     } catch (err) {
       next(err);
