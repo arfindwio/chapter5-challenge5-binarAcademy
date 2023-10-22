@@ -4,14 +4,26 @@ const app = express();
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const flash = require("connect-flash");
+const session = require("express-session");
 const router = require("./routes");
+const { SESSION_SECRET_KEY } = process.env;
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "controllers")));
+app.use(
+  session({
+    secret: SESSION_SECRET_KEY,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+app.use(flash());
 
 app.use(router);
 

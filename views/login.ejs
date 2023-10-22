@@ -1,5 +1,18 @@
 <%-include("./partials/header")-%>
 <body class="bg-blue-500">
+  <% if (msg1.length !== 0) { %>
+  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 rounded-sm bg-red-500 text-white px-4 py-2">
+    <p><%= msg1 %></p>
+  </div>
+  <% }else if (msg2.length !== 0) { %>
+  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 rounded-sm bg-red-500 text-white px-4 py-2">
+    <p><%= msg2 %></p>
+  </div>
+  <% }else if(msg3.length !== 0) { %>
+  <div class="fixed top-5 left-1/2 transform -translate-x-1/2 rounded-sm bg-green-400 text-white px-4 py-2">
+    <p><%= msg3 %></p>
+  </div>
+  <% } %>
   <div class="flex items-center justify-center h-screen">
     <div class="bg-white rounded-lg shadow-2xl w-[30%] h-[50%] flex flex-col items-center justify-center bg-opacity-90 py-10">
       <h1 class="font-bold text-2xl text-center mb-7">LOGIN</h1>

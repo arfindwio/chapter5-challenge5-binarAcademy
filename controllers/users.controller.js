@@ -206,7 +206,7 @@ module.exports = {
 
   getLoginUser: (req, res, next) => {
     try {
-      res.render("login");
+      res.render("login", { msg1: req.flash("msg1"), msg2: req.flash("msg2"), msg3: req.flash("msg3") });
     } catch (err) {
       next(err);
     }
@@ -214,7 +214,7 @@ module.exports = {
 
   getRegisterUser: (req, res, next) => {
     try {
-      res.render("register");
+      res.render("register", { msg1: req.flash("msg1"), msg2: req.flash("msg2"), msg3: req.flash("msg3") });
     } catch (err) {
       next(err);
     }
@@ -230,10 +230,12 @@ module.exports = {
 
       if (existingUser) {
         req.flash("msg1", "Email already exists");
+        res.redirect("/register");
       }
 
       if (password != password_confirmation) {
         req.flash("msg2", "please ensure that the password and password confirmation match!");
+        res.redirect("/register");
       }
 
       let encryptedPassword = await bcrypt.hash(password, 10);
@@ -245,6 +247,7 @@ module.exports = {
         },
       });
 
+      req.flash("msg3", "Register Successfully");
       res.redirect("/login");
     } catch (err) {
       next(err);
@@ -260,18 +263,21 @@ module.exports = {
       });
 
       if (!user) {
-        req.flash("msg1", "invalid email or password!");
+        req.flash("msg1", "Invalid Email or Password!");
+        res.redirect("/login");
       }
 
       let isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
         req.flash("msg2", "invalid email or password!");
+        res.redirect("/login");
       }
 
       let token = jwt.sign({ id: user.id }, JWT_SECRET_KEY);
 
       res.cookie("token", token);
       res.redirect("/");
+      req.flash("msg3", "Login Successfully");
     } catch (err) {
       next(err);
     }
