@@ -1,0 +1,14 @@
+<%-include("./partials/header")-%>
+<body class="bg-blue-500">
+  <div class="flex items-center justify-center h-screen">
+    <div class="bg-white rounded-lg shadow-2xl w-[30%] h-[60%] flex flex-col items-center justify-center bg-opacity-90 py-10">
+      <h1 class="font-bold text-2xl text-center mb-7">Welcome To Dashboard</h1>
+      <div class="flex flex-col justify-start text-center">
+        <img src="/img/user-icon.svg" class="w-20 mx-auto mb-4" />
+        <p class="bg-slate-400 rounded-full font-semibold py-1 px-4 mb-2"><%= user.data.user.name %></p>
+        <p class="bg-slate-400 rounded-full font-semibold py-1 px-4 mb-2"><%= user.data.user.email %></p>
+        <a href="/logout" class="bg-red-700 text-white rounded-full font-semibold py-1 px-4">Logout</a>
+      </div>
+    </div>
+  </div>
+</body>

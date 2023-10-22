@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const { getPagination } = require("../helpers");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { default: axios } = require("axios");
 const { JWT_SECRET_KEY } = process.env;
 
 module.exports = {
@@ -152,6 +153,7 @@ module.exports = {
       next(err);
     }
   },
+
   // Login User
   loginUser: async (req, res, next) => {
     try {
@@ -197,6 +199,108 @@ module.exports = {
         message: "OK",
         data: { user: req.user },
       });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getLoginUser: (req, res, next) => {
+    try {
+      res.render("login");
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getRegisterUser: (req, res, next) => {
+    try {
+      res.render("register");
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  createRegisterUser: async (req, res, next) => {
+    try {
+      let { name, email, password, password_confirmation } = req.body;
+
+      const existingUser = await prisma.users.findUnique({
+        where: { email },
+      });
+
+      if (existingUser) {
+        req.flash("msg1", "Email already exists");
+      }
+
+      if (password != password_confirmation) {
+        req.flash("msg2", "please ensure that the password and password confirmation match!");
+      }
+
+      let encryptedPassword = await bcrypt.hash(password, 10);
+      await prisma.users.create({
+        data: {
+          name,
+          email,
+          password: encryptedPassword,
+        },
+      });
+
+      res.redirect("/login");
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  createLoginUser: async (req, res, next) => {
+    try {
+      let { email, password } = req.body;
+
+      const user = await prisma.users.findUnique({
+        where: { email },
+      });
+
+      if (!user) {
+        req.flash("msg1", "invalid email or password!");
+      }
+
+      let isPasswordCorrect = await bcrypt.compare(password, user.password);
+      if (!isPasswordCorrect) {
+        req.flash("msg2", "invalid email or password!");
+      }
+
+      let token = jwt.sign({ id: user.id }, JWT_SECRET_KEY);
+
+      res.cookie("token", token);
+      res.redirect("/");
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  dashboardUser: async (req, res, next) => {
+    try {
+      const token = req.cookies.token;
+
+      if (!token) {
+        return res.redirect("/login");
+      }
+
+      const response = await axios.get("http://localhost:3000/api/v1/users/auth/authenticate", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      res.render("dashboard-user", { user: response.data });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  getLogoutUser: (req, res, next) => {
+    try {
+      res.clearCookie("token");
+      res.redirect("/login");
     } catch (err) {
       next(err);
     }

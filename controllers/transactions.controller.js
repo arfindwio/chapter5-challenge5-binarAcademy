@@ -8,7 +8,7 @@ module.exports = {
       const { source_account_id, destination_account_id, amount } = req.body;
 
       if (source_account_id === destination_account_id) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "Source and destination accounts cannot be the same",
           data: null,
@@ -24,7 +24,7 @@ module.exports = {
       });
 
       if (!sourceAccount || !destinationAccount) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "Source or destination account not found",
           data: null,
@@ -32,7 +32,7 @@ module.exports = {
       }
 
       if (sourceAccount.balance < amount) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "Insufficient balance in the source account",
           data: null,
@@ -104,13 +104,13 @@ module.exports = {
 
   getTransactionDetail: async (req, res, next) => {
     try {
-      let id = req.params.id;
+      const id = req.params.id;
 
       const transaction = await prisma.transactions.findUnique({
         where: { id: Number(id) },
         include: {
           source_account: {
-            select: {
+            include: {
               user: {
                 select: {
                   name: true,
@@ -119,7 +119,7 @@ module.exports = {
             },
           },
           destination_account: {
-            select: {
+            include: {
               user: {
                 select: {
                   name: true,
@@ -131,7 +131,7 @@ module.exports = {
       });
 
       if (!transaction) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "Transaction not found",
           data: null,
@@ -140,7 +140,7 @@ module.exports = {
 
       res.status(200).json({
         status: true,
-        message: "Get Transasctions Detail Successfully",
+        message: "Get Transaction Detail Successfully",
         data: transaction,
       });
     } catch (err) {

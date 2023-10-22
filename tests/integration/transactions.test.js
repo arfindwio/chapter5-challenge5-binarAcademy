@@ -37,9 +37,8 @@ describe("test POST /api/v1/transactions endpoint", () => {
   });
 
   test("test cari source_account_id & destination_account_id tidak terdaftar didalam database -> error", async () => {
-    let accounts = await prisma.bank_accounts.findMany();
-    let source_account_id = accounts[0].id + 1000;
-    let destination_account_id = accounts[1].id + 1000;
+    let source_account_id = transaction.source_account_id + 1000;
+    let destination_account_id = transaction.destination_account_id + 1000;
     let amount = 100000;
 
     let { statusCode, body } = await request(app).post("/api/v1/transactions").send({ source_account_id, destination_account_id, amount });

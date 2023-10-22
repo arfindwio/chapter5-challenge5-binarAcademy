@@ -22,8 +22,8 @@ POST http://localhost:3000/api/v1/users/auth/register
 Content-Type: application/json
 
 {
-    "name":"arfin2",
-    "email":"arfin2@mail.com",
+    "name":"arfin",
+    "email":"arfin@mail.com",
     "password":"123456",
     "password_confirmation": "123456"
 }
@@ -33,13 +33,13 @@ POST http://localhost:3000/api/v1/users/auth/login
 Content-Type: application/json
 
 {
-    "email":"usertest2@mail.com",
-    "password":"pasword123"
+    "email":"arfin@mail.com",
+    "password":"123456"
 }
 
 ###
 GET http://localhost:3000/api/v1/users/auth/authenticate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ5LCJpYXQiOjE2OTc3NTg4MDR9.xSJixB10EMOiqzSVzyDxKR1elE1ryqGkAl7T4HaVvwo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTUxLCJpYXQiOjE2OTc5MzcxNjZ9.5xaLgjPMc5RzV-jgz2oXaUgWXUqRUNtVCYvwD4TAk-E
 
 ###
 POST http://localhost:3000/api/v1/accounts
@@ -74,4 +74,4 @@ Content-Type: application/json
 GET http://localhost:3000/api/v1/transactions
 
 ###
-GET http://localhost:3000/api/v1/transactions/16
+GET http://localhost:3000/api/v1/transactions/54

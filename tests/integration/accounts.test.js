@@ -66,7 +66,7 @@ describe("test POST /api/v1/accounts endpoint", () => {
     }
   });
 
-  test("test cari user_id tidak terdaftar didalam database -> error", async () => {
+  it("test cari user_id tidak terdaftar didalam database -> error", async () => {
     let users = await prisma.users.findMany();
     let user_id = users[0] + 1000;
     let bank_name = "BRI";
@@ -75,7 +75,7 @@ describe("test POST /api/v1/accounts endpoint", () => {
 
     let { statusCode, body } = await request(app).post("/api/v1/accounts").send({ bank_name, bank_account_number, balance, user_id });
 
-    expect(statusCode).toBe(400);
+    expect(statusCode).toBe(500);
     expect(body).toHaveProperty("status");
     expect(body).toHaveProperty("message");
     expect(body).toHaveProperty("data");

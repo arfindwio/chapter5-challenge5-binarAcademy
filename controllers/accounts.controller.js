@@ -13,7 +13,7 @@ module.exports = {
       });
 
       if (!user) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "User not found",
           data: null,
@@ -82,7 +82,7 @@ module.exports = {
       });
 
       if (!account) {
-        return res.status(400).json({
+        res.status(400).json({
           status: false,
           message: "Bad Request",
           data: `No account found with ID ${id}`,

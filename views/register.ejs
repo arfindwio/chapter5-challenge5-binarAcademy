@@ -1,0 +1,43 @@
+<%- include("./partials/header") -%>
+
+<body class="bg-blue-500">
+  <div class="flex items-center justify-center h-screen">
+    <div class="bg-white rounded-lg shadow-2xl w-[30%] h-[65%] flex flex-col justify-center items-center bg-opacity-90 py-10">
+      <h1 class="font-bold text-2xl text-center mb-7">Register</h1>
+      <form action="/register" method="post" class="flex flex-col w-[70%]">
+        <div class="bg-slate-900 flex mb-2">
+          <label for="name" class="p-2">
+            <img src="/img/user-icon.svg" class="filter invert sepia saturate-2184 hue-rotate-134 brightness-117 contrast-108 w-7" />
+          </label>
+          <input type="text" name="name" id="name" class="bg-slate-600 outline-none placeholder-white placeholder:text-sm placeholder-opacity-60 text-white focus:ring-0 w-[120%] pl-2 h-full" placeholder="Name" />
+        </div>
+        <div class="bg-slate-900 flex mb-2">
+          <label for="email" class="p-2">
+            <img src="/img/email-icon.svg" class="filter invert sepia saturate-2184 hue-rotate-134 brightness-117 contrast-108 w-7" />
+          </label>
+          <input type="email" name="email" id="email" class="bg-slate-600 outline-none placeholder-white placeholder:text-sm placeholder-opacity-60 text-white focus:ring-0 w-[120%] pl-2 h-full" placeholder="Email" />
+        </div>
+        <div class="bg-slate-900 flex mb-2">
+          <label for="password" class="p-2">
+            <img src="/img/lock-icon.svg" class="filter invert sepia saturate-2184 hue-rotate-134 brightness-117 contrast-108 w-7" />
+          </label>
+          <input type="password" name="password" id="password" class="bg-slate-600 outline-none placeholder-white placeholder:text-sm placeholder-opacity-60 text-white focus:ring-0 w-[120%] pl-2 h-full" placeholder="Password" />
+        </div>
+        <div class="bg-slate-900 flex">
+          <label for="password_confirmation" class="p-2">
+            <img src="/img/lock-icon.svg" class="filter invert sepia saturate-2184 hue-rotate-134 brightness-117 contrast-108 w-7" />
+          </label>
+          <input
+            type="password"
+            name="password_confirmation"
+            id="password_confirmation"
+            class="bg-slate-600 outline-none placeholder-white placeholder:text-sm placeholder-opacity-60 text-white focus:ring-0 w-[120%] pl-2 h-full"
+            placeholder="Password Confirmation"
+          />
+        </div>
+        <button type="submit" value="Register" class="bg-sky-500 text-white py-1 rounded-full mt-2">Register</button>
+      </form>
+      <p class="text-center mt-1 text-slate-400">Already have an account? <a href="/login" class="font-semibold text-blue-700">Login</a></p>
+    </div>
+  </div>
+</body>
